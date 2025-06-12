@@ -1,5 +1,6 @@
 import CustomerTable from "@/components/CustomerTable";
 
+
 export default function CustomerPage() {
   return (
     <div className="p-6">
