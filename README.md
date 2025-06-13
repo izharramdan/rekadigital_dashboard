@@ -1,5 +1,7 @@
 # 📘 POS Dashboard Frontend
 
+[🔗 Lihat Repository di GitHub](https://github.com/izharramdan/rekadigital_dashboard)
+
 ---
 
 ## 📌 Teknologi yang Digunakan
