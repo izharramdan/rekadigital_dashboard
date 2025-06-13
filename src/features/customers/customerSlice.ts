@@ -14,6 +14,7 @@ interface CustomerState {
   sortBy: keyof Customer | null;
   sortDirection: "asc" | "desc";
   currentPage: number;
+  filterLevels?: string[];
 }
 
 const initialState: CustomerState = {
@@ -93,6 +94,7 @@ const initialState: CustomerState = {
   sortBy: null,
   sortDirection: "asc",
   currentPage: 1,
+  filterLevels: [],
 };
 
 const customerSlice = createSlice({
@@ -117,9 +119,13 @@ const customerSlice = createSlice({
     setPage: (state, action: PayloadAction<number>) => {
       state.currentPage = action.payload;
     },
+    setFilterLevels: (state, action: PayloadAction<string[]>) => {
+      state.filterLevels = action.payload;
+      state.currentPage = 1;
+    },
   },
 });
 
-export const { addCustomer, setSearch, setSort, setPage } =
+export const { addCustomer, setSearch, setSort, setPage, setFilterLevels } =
   customerSlice.actions;
 export default customerSlice.reducer;

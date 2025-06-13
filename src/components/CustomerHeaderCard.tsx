@@ -9,22 +9,46 @@ import {
 } from "react-icons/fi";
 import CustomerAddModal from "./CustomerModal";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { setSearch } from "@/features/customers/customerSlice";
-
+import { useDispatch, useSelector } from "react-redux";
+import { setSearch, setFilterLevels } from "@/features/customers/customerSlice";
+import { RootState } from "@/store";
 import Image from "next/image";
+
+const LEVELS = ["Warga", "Juragan", "Sultan", "Konglomerat"];
 
 export default function CustomerHeaderCard() {
   const [showAddModal, setShowAddModal] = useState(false);
   const [search, setSearchInput] = useState("");
+  const [filterOpen, setFilterOpen] = useState(false);
+
   const dispatch = useDispatch();
+  const filterLevels = useSelector(
+    (state: RootState) => state.customer.filterLevels || []
+  );
+
+  function handleLevelChange(level: string) {
+    const newLevels = filterLevels.includes(level)
+      ? filterLevels.filter((l) => l !== level)
+      : [...filterLevels, level];
+    dispatch(setFilterLevels(newLevels));
+  }
+
   function handleSearch(e: React.FormEvent) {
     e.preventDefault();
     dispatch(setSearch(search));
   }
+
+  function handleRefresh() {
+    window.location.reload(); // atau dispatch(getCustomers()) jika pakai async thunk
+  }
+
+  function handlePrint() {
+    window.print();
+  }
+
   return (
-    <div className="relative bg-gradient-to-r from-indigo-500 to-purple-500 rounded-2xl p-6 text-white font-quicksand overflow-hidden">
-      {/* Decorative Background Image */}
+    <div className="relative bg-gradient-to-r from-indigo-500 to-purple-500 rounded-2xl p-6 text-white font-quicksand overflow-visible">
+      {/* Background Image */}
       <div className="absolute right-0 top-0 bottom-0 w-[300px] hidden md:block rounded-r-2xl overflow-hidden">
         <div className="relative w-full h-full">
           <Image
@@ -40,7 +64,7 @@ export default function CustomerHeaderCard() {
         </div>
       </div>
 
-      {/* Content */}
+      {/* Main Content */}
       <div className="relative z-10 flex flex-col gap-4">
         {/* Header Text */}
         <div className="max-w-xl">
@@ -64,7 +88,7 @@ export default function CustomerHeaderCard() {
 
           {/* Search Bar */}
           <form
-            className="flex-1 min-w-[220px] flex items-center overflow-hidden rounded-md bg-white shadow-sm border border-gray-200 max-w-lg"
+            className="flex-grow min-w-[220px] flex items-center overflow-hidden rounded-md bg-white shadow-sm border border-gray-200 max-w-[900px]"
             onSubmit={handleSearch}
           >
             <div className="flex items-center px-3 text-gray-400">
@@ -85,24 +109,73 @@ export default function CustomerHeaderCard() {
             </button>
           </form>
 
-          {/* Action Buttons - Frosted Glass */}
-          <div className="flex gap-2 ml-auto">
-            {[
-              { icon: <FiFilter />, label: "Filter" },
-              { icon: <FiRefreshCcw />, label: "Refresh" },
-              { icon: <FiPrinter />, label: "" },
-            ].map(({ icon, label }, i) => (
-              <button
-                key={i}
-                className="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white rounded-md px-3 py-2 text-sm transition backdrop-blur-sm border border-white/20"
-              >
-                {icon}
-                {label}
-              </button>
-            ))}
+          {/* Buttons: Filter, Refresh, Print */}
+          <div className="flex gap-2 ml-auto relative">
+            {/* Filter */}
+            <button
+              type="button"
+              className="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white rounded-md px-3 py-2 text-sm transition backdrop-blur-sm border border-white/20"
+              onClick={() => setFilterOpen((v) => !v)}
+            >
+              <FiFilter />
+              Filter
+            </button>
+
+            {/* Refresh */}
+            <button
+              type="button"
+              onClick={handleRefresh}
+              className="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white rounded-md px-3 py-2 text-sm transition backdrop-blur-sm border border-white/20"
+            >
+              <FiRefreshCcw />
+              Refresh
+            </button>
+
+            {/* Print */}
+            <button
+              type="button"
+              onClick={handlePrint}
+              className="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white rounded-md px-3 py-2 text-sm transition backdrop-blur-sm border border-white/20"
+            >
+              <FiPrinter />
+            </button>
+
+            {/* Dropdown Filter */}
+            {filterOpen && (
+              <div className="absolute right-0 top-full mt-2 w-48 bg-white text-gray-700 rounded-md shadow-lg z-50 p-2">
+                <div className="font-semibold mb-2 text-sm">
+                  Filter by Level
+                </div>
+                {LEVELS.map((level) => (
+                  <label
+                    key={level}
+                    className="flex items-center gap-2 px-2 py-1 hover:bg-gray-100 rounded cursor-pointer text-sm"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={filterLevels.includes(level)}
+                      onChange={() => handleLevelChange(level)}
+                      className="accent-indigo-500"
+                    />
+                    {level}
+                  </label>
+                ))}
+                <button
+                  className="mt-2 w-full text-xs text-indigo-600 hover:underline"
+                  onClick={() => {
+                    dispatch(setFilterLevels([]));
+                    setFilterOpen(false);
+                  }}
+                >
+                  Clear Filter
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>
+
+      {/* Modal */}
       <CustomerAddModal
         open={showAddModal}
         onClose={() => setShowAddModal(false)}
