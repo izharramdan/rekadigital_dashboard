@@ -2,29 +2,54 @@
 
 type MenuItem = {
   name: string;
-  totalSold: number;
 };
 
-const mockMenus: MenuItem[] = [
-  { name: "Ayam Geprek", totalSold: 120 },
-  { name: "Nasi Goreng", totalSold: 98 },
-  { name: "Es Teh Manis", totalSold: 85 },
+const topMenus: MenuItem[] = [
+  { name: "Nasi Goreng Jamur Special Resto Pak Min" },
+  { name: "Tongseng Sapi Gurih" },
+  { name: "Nasi Gudeg Telur Ceker" },
+  { name: "Nasi Ayam serundeng" },
+  { name: "Nasi Goreng Seafood" },
 ];
 
 export default function TopMenuCard() {
   return (
     <div className="bg-white rounded-2xl p-6 shadow-sm w-full font-quicksand">
-      <h2 className="text-lg font-semibold text-gray-800 mb-4">
-        Top Menu This Week
+      <h2 className="text-lg font-semibold text-gray-800">
+        Top Menu <span className="text-orange-500">This Week</span>
       </h2>
-      <ul className="space-y-3">
-        {mockMenus.map((menu, index) => (
-          <li key={index} className="flex justify-between items-center text-sm">
-            <span className="text-gray-700">{menu.name}</span>
-            <span className="text-gray-500">{menu.totalSold} sold</span>
+      <p className="text-xs text-gray-400 mt-1 mb-4">10 - 12 Agustus 2023</p>
+
+      <ul className="space-y-3 mb-4">
+        {topMenus.map((menu, index) => (
+          <li key={index} className="relative">
+            {index === 0 ? (
+              <div className="bg-white rounded-lg shadow-md px-4 py-2 text-sm font-medium flex items-start">
+                {menu.name}
+                <span className="absolute -top-2 -right-2 bg-orange-500 text-white text-xs px-2 py-1 rounded-lg font-bold shadow-sm">
+                  1
+                </span>
+              </div>
+            ) : (
+              <p className="text-gray-400 text-sm ml-1">
+                {index + 1}. {menu.name}
+              </p>
+            )}
           </li>
         ))}
       </ul>
+
+      {/* Dummy chart */}
+      <div className="w-full h-16">
+        <svg viewBox="0 0 100 20" className="w-full h-full">
+          <path
+            d="M0 15 C 20 5, 40 25, 60 10 S 100 20, 100 15"
+            stroke="#f97316"
+            strokeWidth="2"
+            fill="none"
+          />
+        </svg>
+      </div>
     </div>
   );
 }
