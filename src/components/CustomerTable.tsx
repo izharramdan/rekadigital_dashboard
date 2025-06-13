@@ -50,7 +50,7 @@ export default function CustomerTable() {
   return (
     <>
       <div className="overflow-x-auto mt-6 rounded-md max-w-full">
-        <table className="w-full text-sm text-left font-quicksand table-fixed">
+        <table className="w-full text-sm text-left font-quicksand table-fixed min-w-[600px]">
           <thead className="bg-[#FAFAFA] text-md text-gray-500 tracking-wide">
             <tr>
               <th
@@ -151,6 +151,44 @@ export default function CustomerTable() {
             ))}
           </tbody>
         </table>
+        {/* Responsive Card View for Mobile */}
+        <div className="block md:hidden">
+          {paginatedCustomers.map((customer: Customer) => (
+            <div
+              key={customer.id}
+              className="bg-white rounded-lg shadow p-4 mb-4 text-[#110D17] font-semibold"
+            >
+              <div className="flex justify-between items-center mb-2">
+                <span className="font-bold">{customer.name}</span>
+                <span
+                  className={`px-2 py-1 text-xs font-semibold rounded-md ${getLevelColor(
+                    customer.level
+                  )}`}
+                >
+                  {customer.level}
+                </span>
+              </div>
+              <div className="text-sm mb-1">
+                <span className="font-medium">Menu:</span> {customer.favoriteMenu}
+              </div>
+              <div className="text-sm mb-2">
+                <span className="font-medium">Transaction:</span>{" "}
+                {formatRupiah(customer.totalTransaction)}
+              </div>
+              <div className="flex gap-2">
+                <button className="bg-[#F9FAFB] hover:bg-gray-100 text-primary text-xs rounded-md px-2 py-1 shadow-sm">
+                  Detail
+                </button>
+                <button className="p-1.5 hover:bg-gray-100 rounded-md text-gray-500">
+                  <FiEdit2 size={14} />
+                </button>
+                <button className="p-1.5 hover:bg-gray-100 rounded-md text-red-500">
+                  <FiTrash2 size={14} />
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
       <Pagination
         currentPage={page}

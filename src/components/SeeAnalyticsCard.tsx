@@ -2,7 +2,7 @@
 
 export default function SeeAnalyticsCard() {
   return (
-    <div className="relative w-[227px] bg-gradient-to-br from-indigo-500 to-blue-400 text-white rounded-2xl p-6 overflow-hidden font-quicksand">
+    <div className="relative w-full max-w-xl bg-gradient-to-br from-indigo-500 to-blue-400 text-white rounded-2xl p-6 overflow-hidden font-quicksand">
       {/* Background Garis Lengkung */}
       <div className="absolute right-0 bottom-0 w-2/3 opacity-20 pointer-events-none">
         <svg viewBox="0 0 200 200" fill="none" className="w-full h-full">

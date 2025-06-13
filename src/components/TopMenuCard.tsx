@@ -14,7 +14,7 @@ const topMenus: MenuItem[] = [
 
 export default function TopMenuCard() {
   return (
-    <div className="bg-white w-[227px] rounded-2xl p-6 shadow-sm font-quicksand flex flex-col flex-1">
+    <div className="bg-white w-full max-w-xl rounded-2xl p-6 shadow-sm font-quicksand flex flex-col flex-1">
       <h2 className="text-lg font-semibold text-gray-800">
         Top Menu <span className="text-orange-500">This Week</span>
       </h2>
