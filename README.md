@@ -1,36 +1,112 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 📘 POS Dashboard Frontend
 
-## Getting Started
+---
 
-First, run the development server:
+## 📌 Teknologi yang Digunakan
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+| Teknologi      | Deskripsi                                      |
+| -------------- | ---------------------------------------------- |
+| **Next.js 15** | Framework React modern dengan App Router       |
+| **TypeScript** | Superset JavaScript dengan tipe statis         |
+| **TailwindCSS**| Utility-first CSS framework (v4.0)             |
+| **Redux Toolkit** | Manajemen state global via @reduxjs/toolkit |
+| **React Icons** | Icon library ringan dan fleksibel            |
+
+---
+
+## 🧱 Struktur Folder
+
+```
+/components
+  ├── CustomerTable.tsx
+  ├── CustomerModal.tsx
+  ├── CustomerHeaderCard.tsx
+  ├── SeeAnalyticsCard.tsx
+  ├── TopMenuCard.tsx
+  ├── Sidebar.tsx
+  ├── Navbar.tsx
+  └── Pagination.tsx
+
+/features
+  └── customers
+      ├── customerSlice.ts
+      └── types.ts
+
+/app
+  └── customer
+      └── page.tsx (CustomerPage)
+
+/store
+  ├── index.ts
+  └── provider.tsx
+
+/styles
+  └── globals.css
+
+/utils
+  └── sortCustomer.ts
+
+/lib
+└── utils.ts
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🧭 Alur Halaman Customer
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 🔹 `/customer/page.tsx`
+- Komponen utama halaman customer.
+- **Layout:**
+  - **Kiri:** `CustomerHeaderCard`, `CustomerTable`
+  - **Kanan:** `SeeAnalyticsCard`, `TopMenuCard`
 
-## Learn More
+### 🔹 `CustomerHeaderCard`
+- Header informatif dengan:
+  - Banner background
+  - Tombol tambah customer
+  - Search bar (terhubung Redux)
+  - Dropdown filter level (Warga, Juragan, dst.)
+  - Tombol Refresh dan Print (opsional)
 
-To learn more about Next.js, take a look at the following resources:
+### 🔹 `CustomerTable`
+- Tabel customer dengan fitur:
+  - Pagination
+  - Sorting (opsional)
+  - Search & filter via Redux
+  - Data bersumber dari state global
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 🔹 `CustomerModal`
+- Form tambah customer
+- Menggunakan controlled input + validasi lokal
+- Terkoneksi ke Redux untuk menambah data ke state
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 🔹 `SeeAnalyticsCard` & `TopMenuCard`
+- Kartu tambahan di sisi kanan untuk:
+  - Insight statistik
+  - Navigasi menu terkait
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🔧 Redux State: `customerSlice.ts`
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```ts
+interface CustomerState {
+  search: string;
+  filterLevels: string[];
+  customers: Customer[];
+}
+```
+
+- `setSearch(string)`: set keyword pencarian
+- `setFilterLevels(string[])`: set level filter
+- `setCustomers(Customer[])`: update list customer
+
+---
+
+## 📱 Responsive Design
+
+- Layout menggunakan `flex-col` (mobile) dan `flex-row` (`lg:`)
+- Sisi kanan (`lg:max-w-sm`) dan `lg:ml-auto` agar tetap menempel kanan
+- Gunakan `overflow-x-hidden` pada parent jika perlu
+
+---

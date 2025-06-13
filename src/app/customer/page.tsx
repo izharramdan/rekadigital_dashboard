@@ -15,7 +15,7 @@ export default function CustomerPage() {
         </div>
 
         {/* KANAN – kartu analytics (≈ 1/3 lebar) */}
-        <div className="w-full lg:max-w-sm lg:ml-auto flex flex-col gap-6">
+        <div className="w-full lg:max-w-xs lg:ml-auto flex flex-col gap-6">
           <SeeAnalyticsCard />
           <TopMenuCard />
         </div>
