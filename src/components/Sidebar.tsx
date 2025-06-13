@@ -16,6 +16,7 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
+import Image from "next/image";
 
 const mainMenu = [
   { label: "Dashboard", icon: MdDashboard, path: "/dashboard", badge: 4 },
@@ -40,9 +41,15 @@ export default function Sidebar() {
     <aside className="sticky top-0 self-start h-screen w-[200px] bg-white border-r border-[#D1D0D366] flex flex-col justify-between font-primary">
       {/* Top Section */}
       <div>
-        <h1 className="text-[#5B5FED] text-2xl font-bold px-6 pt-6 mb-6">
-          b square
-        </h1>
+        <div className="flex justify-center items-center py-6">
+          <Image
+            src="/logo.png"
+            alt="App Logo"
+            width={120}
+            height={48}
+            priority
+          />
+        </div>
 
         <nav className="px-3">
           <div className="text-sm text-gray-400 tracking-wide mb-2 px-2">

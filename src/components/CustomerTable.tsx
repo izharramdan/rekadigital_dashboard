@@ -37,7 +37,7 @@ export default function CustomerTable() {
                 <td className="px-4 py-[14.5px] truncate">{customer.name}</td>
                 <td className="px-4 py-[14.5px]">
                   <span
-                    className={`px-2 py-1 text-xs font-semibold rounded-xl inline-block ${getLevelColor(
+                    className={`px-2 py-1 text-sm font-semibold rounded-md inline-block ${getLevelColor(
                       customer.level
                     )}`}
                   >
