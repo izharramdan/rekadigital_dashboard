@@ -7,10 +7,13 @@ import {
   FiPrinter,
   FiSearch,
 } from "react-icons/fi";
+import CustomerAddModal from "./CustomerModal";
+import { useState } from "react";
 
 import Image from "next/image";
 
 export default function CustomerHeaderCard() {
+  const [showAddModal, setShowAddModal] = useState(false);
   return (
     <div className="relative bg-gradient-to-r from-indigo-500 to-purple-500 rounded-2xl p-6 text-white font-quicksand overflow-hidden">
       {/* Decorative Background Image */}
@@ -20,9 +23,9 @@ export default function CustomerHeaderCard() {
             src="/header.jpg"
             alt="Customer Banner"
             fill
-            className="object-cover scale-110"
+            className="object-cover scale-240"
             style={{
-              clipPath: "polygon(20% 0, 100% 0, 100% 100%, 0% 100%)",
+              clipPath: "polygon(65% 0, 100% 0, 100% 100%, 0% 100%)",
             }}
             priority
           />
@@ -43,7 +46,10 @@ export default function CustomerHeaderCard() {
         {/* Actions */}
         <div className="flex flex-wrap items-center gap-3 mt-2">
           {/* Add Button */}
-          <button className="flex items-center gap-2 bg-white/20 hover:bg-white/30 text-white font-semibold rounded-md px-4 py-2 text-sm shadow-sm">
+          <button
+            className="flex items-center gap-2 bg-white/20 hover:bg-white/30 text-white font-semibold rounded-md px-4 py-2 text-sm shadow-sm"
+            onClick={() => setShowAddModal(true)}
+          >
             <FiPlus />
             Add New Customer
           </button>
@@ -80,6 +86,10 @@ export default function CustomerHeaderCard() {
             ))}
           </div>
         </div>
+        <CustomerAddModal
+          open={showAddModal}
+          onClose={() => setShowAddModal(false)}
+        />
       </div>
     </div>
   );
