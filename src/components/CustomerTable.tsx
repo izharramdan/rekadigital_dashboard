@@ -1,59 +1,91 @@
-'use client';
-
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
-import { Customer } from '@/features/customers/customerSlice';
-import { formatRupiah } from '@/lib/utils';
+"use client";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { Customer } from "@/features/customers/customerSlice";
+import { formatRupiah } from "@/lib/utils";
+import { FiEdit2, FiTrash2 } from "react-icons/fi";
+import Pagination from "./Pagination";
 
 export default function CustomerTable() {
   const customers = useSelector((state: RootState) => state.customer.data);
+  const [page, setPage] = useState(1);
 
   return (
-    <div className="overflow-x-auto mt-6 rounded-xl border border-gray-200 shadow-sm">
-      <table className="w-full text-sm text-left">
-        <thead className="bg-[#F9FAFB] text-xs text-gray-500 uppercase tracking-wide border-b">
-          <tr>
-            <th className="px-6 py-4">Customer Name</th>
-            <th className="px-6 py-4">Level</th>
-            <th className="px-6 py-4">Favorite Menu</th>
-            <th className="px-6 py-4 text-right">Total Transaction</th>
-            <th className="px-6 py-4 text-center">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {customers.map((customer: Customer) => (
-            <tr key={customer.id} className="bg-white hover:bg-[#FAFBFF] border-b text-gray-700">
-              <td className="px-6 py-4 font-medium">{customer.name}</td>
-              <td className="px-6 py-4">
-                <span className={`px-3 py-1 text-xs font-semibold rounded-xl ${getLevelColor(customer.level)}`}>
-                  {customer.level}
-                </span>
-              </td>
-              <td className="px-6 py-4">{customer.favoriteMenu}</td>
-              <td className="px-6 py-4 text-right">{formatRupiah(customer.totalTransaction)}</td>
-              <td className="px-6 py-4 text-center">
-                <button className="text-primary font-semibold hover:underline">Detail</button>
-              </td>
+    <>
+      <div className="overflow-x-auto mt-6 rounded-md max-w-full">
+        <table className="w-full text-sm text-left font-quicksand table-fixed">
+          <thead className="bg-[#e2e2e2] text-xs text-gray-500 uppercase tracking-wide">
+            <tr>
+              <th className="px-4 py-[14.5px] w-1/5 truncate">Name</th>
+              <th className="px-4 py-[14.5px] w-1/6 truncate">Level</th>
+              <th className="px-4 py-[14.5px] w-1/5 truncate">Favourite Menu</th>
+              <th className="px-4 py-[14.5px] w-1/6 text-right truncate">
+                Transaction
+              </th>
+              <th className="px-4 py-[14.5px] w-1/6 text-center">Action</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+          </thead>
+          <tbody>
+            {customers.map((customer: Customer) => (
+              <tr
+                key={customer.id}
+                className="bg-white hover:bg-[#FAFBFF] text-gray-700"
+              >
+                <td className="px-4 py-[14.5px] truncate">{customer.name}</td>
+                <td className="px-4 py-[14.5px]">
+                  <span
+                    className={`px-2 py-1 text-xs font-semibold rounded-xl inline-block ${getLevelColor(
+                      customer.level
+                    )}`}
+                  >
+                    {customer.level}
+                  </span>
+                </td>
+                <td className="px-4 py-[14.5px] truncate">
+                  {customer.favoriteMenu}
+                </td>
+                <td className="px-4 py-[14.5px] text-right">
+                  {formatRupiah(customer.totalTransaction)}
+                </td>
+                <td className="px-4 py-[14.5px] text-center">
+                  <div className="flex justify-center items-center gap-2">
+                    <button className="bg-[#F9FAFB] hover:bg-gray-100 text-primary text-xs rounded-md px-2 py-1 shadow-sm">
+                      Detail
+                    </button>
+                    <button className="p-1.5 hover:bg-gray-100 rounded-md text-gray-500">
+                      <FiEdit2 size={14} />
+                    </button>
+                    <button className="p-1.5 hover:bg-gray-100 rounded-md text-red-500">
+                      <FiTrash2 size={14} />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <Pagination
+        currentPage={page}
+        totalPages={38}
+        onPageChange={(newPage) => setPage(newPage)}
+      />
+    </>
   );
 }
 
-// Fungsi untuk styling badge level
 function getLevelColor(level: string) {
   switch (level) {
-    case 'Warga':
-      return 'bg-orange-100 text-orange-500';
-    case 'Juragan':
-      return 'bg-cyan-100 text-cyan-500';
-    case 'Sultan':
-      return 'bg-green-100 text-green-500';
-    case 'Konglomerat':
-      return 'bg-pink-100 text-pink-500';
+    case "Warga":
+      return "bg-orange-50 text-orange-500";
+    case "Juragan":
+      return "bg-cyan-50 text-cyan-500";
+    case "Sultan":
+      return "bg-green-50 text-green-500";
+    case "Konglomerat":
+      return "bg-pink-50 text-pink-500";
     default:
-      return 'bg-gray-100 text-gray-500';
+      return "bg-gray-100 text-gray-500";
   }
 }

@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   MdDashboard,
@@ -12,107 +12,114 @@ import {
   MdLogout,
   MdLocalShipping,
   MdInventory2,
-} from "react-icons/md";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import clsx from "clsx";
+} from 'react-icons/md';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import clsx from 'clsx';
 
 const mainMenu = [
-  { label: "Dashboard", icon: <MdDashboard size={20} />, path: "/dashboard" },
-  { label: "Stock", icon: <MdInventory size={20} />, path: "/stock" },
-  { label: "Customer", icon: <MdPeople size={20} />, path: "/customer" },
-  {
-    label: "Restaurant",
-    icon: <MdRestaurant size={20} />,
-    path: "/restaurant",
-  },
-  { label: "Design", icon: <MdDesignServices size={20} />, path: "/design" },
-  { label: "Report", icon: <MdDescription size={20} />, path: "/report" },
-  {
-    label: "Role & Admin",
-    icon: <MdAdminPanelSettings size={20} />,
-    path: "/role-admin",
-  },
-  { label: "Settings", icon: <MdSettings size={20} />, path: "/settings" },
+  { label: 'Dashboard', icon: MdDashboard, path: '/dashboard', badge: 4 },
+  { label: 'Stock', icon: MdInventory, path: '/stock' },
+  { label: 'Customer', icon: MdPeople, path: '/customer' },
+  { label: 'Restaurant', icon: MdRestaurant, path: '/restaurant' },
+  { label: 'Design', icon: MdDesignServices, path: '/design' },
+  { label: 'Report', icon: MdDescription, path: '/report' },
+  { label: 'Role & Admin', icon: MdAdminPanelSettings, path: '/role-admin' },
+  { label: 'Settings', icon: MdSettings, path: '/settings' },
 ];
 
 const integrationMenu = [
-  {
-    label: "Stock",
-    icon: <MdInventory2 size={20} />,
-    path: "/integration/stock",
-  },
-  {
-    label: "Supply",
-    icon: <MdLocalShipping size={20} />,
-    path: "/integration/supply",
-  },
+  { label: 'Stock', icon: MdInventory2, path: '/integration/stock' },
+  { label: 'Supply', icon: MdLocalShipping, path: '/integration/supply' },
 ];
 
 export default function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="w-64 h-screen bg-white border-r px-4 py-6 flex flex-col justify-between font-quicksand">
-      {/* Logo */}
+    <aside
+      className="sticky top-0 self-start h-screen w-[200px] bg-white border-r border-[#D1D0D366] flex flex-col justify-between font-quicksand"
+    >
+      {/* Top Section */}
       <div>
-        <h1 className="text-primary text-xl font-bold mb-8 px-2">bsquare</h1>
+        <h1 className="text-[#5B5FED] text-2xl font-bold px-6 pt-6 mb-6">
+          b square
+        </h1>
 
-        {/* Menu */}
-        <nav className="space-y-4">
-          <div className="space-y-1">
-            {mainMenu.map((item) => (
-              <Link
-                key={item.label}
-                href={item.path}
-                className={clsx(
-                  "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-50 transition",
-                  pathname.startsWith(item.path)
-                    ? "bg-blue-100 text-primary"
-                    : "text-gray-600"
-                )}
-              >
-                {item.icon}
-                {item.label}
-              </Link>
-            ))}
+        <nav className="px-3">
+          <div className="text-xs text-gray-400 uppercase tracking-wide mb-2 px-2">
+            Menu
           </div>
+          <ul className="space-y-1">
+            {mainMenu.map((item) => {
+              const isActive = pathname.startsWith(item.path);
+              const Icon = item.icon;
+              return (
+                <li key={item.label}>
+                  <Link
+                    href={item.path}
+                    className={clsx(
+                      'flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition',
+                      isActive
+                        ? 'text-[#5B5FED] bg-blue-50'
+                        : 'text-gray-600 hover:bg-gray-50'
+                    )}
+                  >
+                    <Icon size={20} className={clsx(isActive ? 'text-[#5B5FED]' : 'text-gray-400')} />
+                    <span className="flex-1">{item.label}</span>
+                    {item.badge && (
+                      <span className="text-xs bg-orange-400 text-white rounded-full px-1.5 py-0.5 font-semibold">
+                        {item.badge}
+                      </span>
+                    )}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
 
-          <div className="mt-6 text-xs text-gray-400 uppercase tracking-wide px-3">
+          <div className="text-xs text-gray-400 uppercase tracking-wide mt-6 mb-2 px-2">
             Integration
           </div>
-          <div className="space-y-1 mt-1">
-            {integrationMenu.map((item) => (
-              <Link
-                key={item.label}
-                href={item.path}
-                className={clsx(
-                  "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-50 transition",
-                  pathname.startsWith(item.path)
-                    ? "bg-blue-100 text-primary"
-                    : "text-gray-600"
-                )}
-              >
-                {item.icon}
-                {item.label}
-              </Link>
-            ))}
-          </div>
+          <ul className="space-y-1">
+            {integrationMenu.map((item) => {
+              const isActive = pathname.startsWith(item.path);
+              const Icon = item.icon;
+              return (
+                <li key={item.label}>
+                  <Link
+                    href={item.path}
+                    className={clsx(
+                      'flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition',
+                      isActive
+                        ? 'text-[#5B5FED] bg-blue-50'
+                        : 'text-gray-600 hover:bg-gray-50'
+                    )}
+                  >
+                    <Icon size={20} className={clsx(isActive ? 'text-[#5B5FED]' : 'text-gray-400')} />
+                    <span>{item.label}</span>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
         </nav>
       </div>
 
-      {/* User Info + Logout */}
-      <div className="mt-8 px-3">
+      {/* User Section */}
+      <div className="px-4 pb-4">
         <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-          <div className="w-10 h-10 rounded-full bg-pink-200 flex items-center justify-center text-white font-bold">
-            S
-          </div>
+          <img
+            src="https://i.pravatar.cc/40"
+            alt="User avatar"
+            className="w-10 h-10 rounded-full object-cover"
+          />
           <div className="text-sm">
             <div className="font-semibold">Savannah N</div>
             <div className="text-gray-400 text-xs">Food Quality Manager</div>
           </div>
         </div>
-        <button className="mt-4 w-full flex items-center justify-center gap-2 text-sm text-red-500 hover:underline transition">
+        <button className="mt-4 w-full flex items-center justify-center gap-2 text-sm font-semibold text-red-600 bg-red-100 hover:bg-red-200 transition py-2 rounded-lg">
           <MdLogout size={18} />
           Logout
         </button>
