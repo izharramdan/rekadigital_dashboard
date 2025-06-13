@@ -4,12 +4,25 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { Customer } from "@/features/customers/customerSlice";
 import { formatRupiah } from "@/lib/utils";
-import { FiEdit2, FiTrash2 } from "react-icons/fi";
+import { FiEdit2, FiTrash2, FiChevronDown, FiChevronUp } from "react-icons/fi";
 import Pagination from "./Pagination";
+import { sortCustomers, SortKey, SortOrder } from "@/utils/sortCustomers";
 
 export default function CustomerTable() {
   const customers = useSelector((state: RootState) => state.customer.data);
   const [page, setPage] = useState(1);
+  const [sortKey, setSortKey] = useState<SortKey>("name");
+  const [sortOrder, setSortOrder] = useState<SortOrder>("asc");
+
+  function handleSort(key: SortKey) {
+    if (sortKey === key) {
+      setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+    } else {
+      setSortKey(key);
+      setSortOrder("asc");
+    }
+  }
+  const sortedCustomers = sortCustomers(customers, sortKey, sortOrder);
 
   return (
     <>
@@ -17,19 +30,67 @@ export default function CustomerTable() {
         <table className="w-full text-sm text-left font-quicksand table-fixed">
           <thead className="bg-[#FAFAFA] text-md text-gray-500 tracking-wide">
             <tr>
-              <th className="px-4 py-[14.5px] w-[20%] truncate">Name</th>
-              <th className="px-4 py-[14.5px] w-[15%] truncate">Level</th>
-              <th className="px-4 py-[14.5px] w-[20%] truncate">
-                Favourite Menu
+              <th
+                className="px-4 py-[14.5px] w-[20%] truncate cursor-pointer select-none"
+                onClick={() => handleSort("name")}
+              >
+                <span className="flex items-center gap-1">
+                  Name
+                  {sortKey === "name" &&
+                    (sortOrder === "asc" ? (
+                      <FiChevronUp size={16} />
+                    ) : (
+                      <FiChevronDown size={16} />
+                    ))}
+                </span>
               </th>
-              <th className="px-4 py-[14.5px] w-[10%] text-right truncate">
-                Transaction
+              <th
+                className="px-4 py-[14.5px] w-[15%] truncate cursor-pointer select-none"
+                onClick={() => handleSort("level")}
+              >
+                <span className="flex items-center gap-1">
+                  Level
+                  {sortKey === "level" &&
+                    (sortOrder === "asc" ? (
+                      <FiChevronUp size={16} />
+                    ) : (
+                      <FiChevronDown size={16} />
+                    ))}
+                </span>
+              </th>
+              <th
+                className="px-4 py-[14.5px] w-[20%] truncate cursor-pointer select-none"
+                onClick={() => handleSort("favoriteMenu")}
+              >
+                <span className="flex items-center gap-1">
+                  Favourite Menu
+                  {sortKey === "favoriteMenu" &&
+                    (sortOrder === "asc" ? (
+                      <FiChevronUp size={16} />
+                    ) : (
+                      <FiChevronDown size={16} />
+                    ))}
+                </span>
+              </th>
+              <th
+                className="px-4 py-[14.5px] w-[10%] text-right truncate cursor-pointer select-none"
+                onClick={() => handleSort("totalTransaction")}
+              >
+                <span className="flex items-center gap-1 justify-end">
+                  Transaction
+                  {sortKey === "totalTransaction" &&
+                    (sortOrder === "asc" ? (
+                      <FiChevronUp size={16} />
+                    ) : (
+                      <FiChevronDown size={16} />
+                    ))}
+                </span>
               </th>
               <th className="px-4 py-[14.5px] w-[20%] text-center">Action</th>
             </tr>
           </thead>
           <tbody>
-            {customers.map((customer: Customer) => (
+            {sortedCustomers.map((customer: Customer) => (
               <tr
                 key={customer.id}
                 className="bg-white hover:bg-[#FAFBFF] text-[#110D17] font-semibold"
