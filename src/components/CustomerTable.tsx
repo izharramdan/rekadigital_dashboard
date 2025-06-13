@@ -10,6 +10,7 @@ import { sortCustomers, SortKey, SortOrder } from "@/utils/sortCustomers";
 
 export default function CustomerTable() {
   const customers = useSelector((state: RootState) => state.customer.data);
+  const search = useSelector((state: RootState) => state.customer.search);
   const [page, setPage] = useState(1);
   const [sortKey, setSortKey] = useState<SortKey>("name");
   const [sortOrder, setSortOrder] = useState<SortOrder>("asc");
@@ -23,7 +24,14 @@ export default function CustomerTable() {
     }
   }
   const itemsPerPage = 10;
-  const sortedCustomers = sortCustomers(customers, sortKey, sortOrder);
+
+  const filteredCustomers = customers.filter((c) =>
+    [c.name, c.level, c.favoriteMenu, c.totalTransaction.toString()]
+      .join(" ")
+      .toLowerCase()
+      .includes(search.toLowerCase())
+  );
+  const sortedCustomers = sortCustomers(filteredCustomers, sortKey, sortOrder);
 
   const paginatedCustomers = sortedCustomers.slice(
     (page - 1) * itemsPerPage,

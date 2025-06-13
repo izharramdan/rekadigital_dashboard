@@ -9,11 +9,19 @@ import {
 } from "react-icons/fi";
 import CustomerAddModal from "./CustomerModal";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setSearch } from "@/features/customers/customerSlice";
 
 import Image from "next/image";
 
 export default function CustomerHeaderCard() {
   const [showAddModal, setShowAddModal] = useState(false);
+  const [search, setSearchInput] = useState("");
+  const dispatch = useDispatch();
+  function handleSearch(e: React.FormEvent) {
+    e.preventDefault();
+    dispatch(setSearch(search));
+  }
   return (
     <div className="relative bg-gradient-to-r from-indigo-500 to-purple-500 rounded-2xl p-6 text-white font-quicksand overflow-hidden">
       {/* Decorative Background Image */}
@@ -55,7 +63,10 @@ export default function CustomerHeaderCard() {
           </button>
 
           {/* Search Bar */}
-          <div className="flex-1 min-w-[220px] flex items-center overflow-hidden rounded-md bg-white shadow-sm border border-gray-200 max-w-lg">
+          <form
+            className="flex-1 min-w-[220px] flex items-center overflow-hidden rounded-md bg-white shadow-sm border border-gray-200 max-w-lg"
+            onSubmit={handleSearch}
+          >
             <div className="flex items-center px-3 text-gray-400">
               <FiSearch className="text-base" />
             </div>
@@ -63,11 +74,16 @@ export default function CustomerHeaderCard() {
               type="text"
               placeholder="Search Customer"
               className="py-2 pr-2 text-sm text-gray-700 focus:outline-none flex-1 bg-transparent"
+              value={search}
+              onChange={(e) => setSearchInput(e.target.value)}
             />
-            <button className="bg-indigo-500 hover:bg-indigo-600 text-white text-xs font-semibold px-3 py-1.5 mr-1 rounded-md">
+            <button
+              type="submit"
+              className="bg-indigo-500 hover:bg-indigo-600 text-white text-xs font-semibold px-3 py-1.5 mr-1 rounded-md"
+            >
               Search
             </button>
-          </div>
+          </form>
 
           {/* Action Buttons - Frosted Glass */}
           <div className="flex gap-2 ml-auto">
