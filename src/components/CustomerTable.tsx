@@ -22,7 +22,14 @@ export default function CustomerTable() {
       setSortOrder("asc");
     }
   }
+  const itemsPerPage = 10;
   const sortedCustomers = sortCustomers(customers, sortKey, sortOrder);
+
+  const paginatedCustomers = sortedCustomers.slice(
+    (page - 1) * itemsPerPage,
+    page * itemsPerPage
+  );
+  const totalPages = Math.ceil(sortedCustomers.length / itemsPerPage);
 
   return (
     <>
@@ -90,7 +97,7 @@ export default function CustomerTable() {
             </tr>
           </thead>
           <tbody>
-            {sortedCustomers.map((customer: Customer) => (
+            {paginatedCustomers.map((customer: Customer) => (
               <tr
                 key={customer.id}
                 className="bg-white hover:bg-[#FAFBFF] text-[#110D17] font-semibold"
@@ -131,8 +138,10 @@ export default function CustomerTable() {
       </div>
       <Pagination
         currentPage={page}
-        totalPages={38}
+        totalPages={totalPages}
         onPageChange={(newPage) => setPage(newPage)}
+        totalData={sortedCustomers.length}
+        itemsPerPage={itemsPerPage}
       />
     </>
   );
