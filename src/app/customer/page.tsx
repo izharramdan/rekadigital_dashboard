@@ -5,7 +5,7 @@ import CustomerHeaderCard from "@/components/CustomerHeaderCard";
 
 export default function CustomerPage() {
   return (
-    <div className="p-6">
+    <div className="p-4 font-primary">
       {/* Wrapper: 1 kolom di mobile, 2 kolom di desktop */}
       <div className="flex flex-col lg:flex-row gap-6">
         {/* KIRI – header + tabel (≈ 2/3 lebar) */}

@@ -10,7 +10,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="font-quicksand">
+      <body className="font-primary">
         <Providers>
           <div className="flex min-h-screen">
             {/* Sidebar */}

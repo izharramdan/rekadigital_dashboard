@@ -49,7 +49,7 @@ export default function Pagination({
               className={cn(
                 "w-8 h-8 rounded-md flex items-center justify-center transition",
                 page === currentPage
-                  ? "bg-indigo-500 text-white font-semibold"
+                  ? "bg-gray-500 text-white font-semibold"
                   : "hover:bg-gray-100"
               )}
             >

@@ -33,7 +33,7 @@ export default function TopMenuCard() {
                   </span>
                 </div>
               ) : (
-                <p className="text-gray-400 text-sm ml-1">
+                <p className="text-[#98949E] text-sm ml-1">
                   {index + 1}. {menu.name}
                 </p>
               )}

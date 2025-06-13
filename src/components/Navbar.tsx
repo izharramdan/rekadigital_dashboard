@@ -8,7 +8,7 @@ export default function Navbar() {
   const [activeTab, setActiveTab] = useState("Customer");
 
   return (
-    <div className="w-full border-b border-gray-200">
+    <div className="w-full border-b border-gray-200 font-primary">
       <div className="flex items-center justify-between mb-1">
         {/* Kiri: Judul & Deskripsi */}
         <div>

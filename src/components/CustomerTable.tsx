@@ -15,22 +15,24 @@ export default function CustomerTable() {
     <>
       <div className="overflow-x-auto mt-6 rounded-md max-w-full">
         <table className="w-full text-sm text-left font-quicksand table-fixed">
-          <thead className="bg-[#e2e2e2] text-xs text-gray-500 uppercase tracking-wide">
+          <thead className="bg-[#FAFAFA] text-md text-gray-500 tracking-wide">
             <tr>
-              <th className="px-4 py-[14.5px] w-1/5 truncate">Name</th>
-              <th className="px-4 py-[14.5px] w-1/6 truncate">Level</th>
-              <th className="px-4 py-[14.5px] w-1/5 truncate">Favourite Menu</th>
-              <th className="px-4 py-[14.5px] w-1/6 text-right truncate">
+              <th className="px-4 py-[14.5px] w-[20%] truncate">Name</th>
+              <th className="px-4 py-[14.5px] w-[15%] truncate">Level</th>
+              <th className="px-4 py-[14.5px] w-[20%] truncate">
+                Favourite Menu
+              </th>
+              <th className="px-4 py-[14.5px] w-[10%] text-right truncate">
                 Transaction
               </th>
-              <th className="px-4 py-[14.5px] w-1/6 text-center">Action</th>
+              <th className="px-4 py-[14.5px] w-[20%] text-center">Action</th>
             </tr>
           </thead>
           <tbody>
             {customers.map((customer: Customer) => (
               <tr
                 key={customer.id}
-                className="bg-white hover:bg-[#FAFBFF] text-gray-700"
+                className="bg-white hover:bg-[#FAFBFF] text-[#110D17] font-semibold"
               >
                 <td className="px-4 py-[14.5px] truncate">{customer.name}</td>
                 <td className="px-4 py-[14.5px]">
