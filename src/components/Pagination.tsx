@@ -15,6 +15,8 @@ export default function Pagination({
   currentPage,
   totalPages,
   onPageChange,
+  totalData = 0,
+  itemsPerPage = 10,
 }: PaginationProps) {
   const getPageNumbers = () => {
     const pages: (number | string)[] = [];
@@ -36,10 +38,13 @@ export default function Pagination({
     return pages;
   };
 
+  // Hitung jumlah data yang tampil di halaman ini
+  const endData = Math.min(currentPage * itemsPerPage, totalData);
+
   return (
     <div className="flex items-center justify-between mt-6 px-4 py-3 bg-white rounded-md text-sm text-gray-600 shadow-xs">
       <div>
-        Showing <strong>10</strong> Data Customers
+        Showing <strong>{endData}</strong> Data Customers
       </div>
 
       <div className="flex items-center gap-1">

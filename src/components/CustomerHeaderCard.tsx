@@ -86,11 +86,11 @@ export default function CustomerHeaderCard() {
             ))}
           </div>
         </div>
-        <CustomerAddModal
-          open={showAddModal}
-          onClose={() => setShowAddModal(false)}
-        />
       </div>
+      <CustomerAddModal
+        open={showAddModal}
+        onClose={() => setShowAddModal(false)}
+      />
     </div>
   );
 }
